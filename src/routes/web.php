@@ -29,4 +29,6 @@ Route::post('/purchase/{item}', [PurchaseController::class, 'store'])->middlewar
 
 Route::get('/purchase/address/{item}', [PurchaseAddressController::class, 'edit'])->middleware('auth', 'unverified.redirect');
 Route::post('/purchase/address/{item}', [PurchaseAddressController::class, 'update'])->middleware('auth', 'unverified.redirect');
+Route::patch('/purchase/address/{item}', [PurchaseAddressController::class, 'update'])->name('purchase.address.update');
+
 

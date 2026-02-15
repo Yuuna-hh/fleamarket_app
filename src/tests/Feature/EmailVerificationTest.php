@@ -28,6 +28,17 @@ class EmailVerificationTest extends TestCase
         Notification::assertSentTo($user, VerifyEmail::class);
     }
 
+    public function test_verification_notice_page_contains_mailhog_link()
+    {
+        $user = User::factory()->unverified()->create();
+
+        $response = $this->actingAs($user)
+            ->get(route('verification.notice'));
+
+        $response->assertSee('認証はこちらから');
+        $response->assertSee('http://localhost:8025');
+    }
+
     public function test_user_can_verify_email()
     {
         $user = User::factory()->unverified()->create();

@@ -5,6 +5,7 @@
 ### Docker ビルド
 
 - git clone git@github.com:Yuuna-hh/fleamarket_app.git
+- cd src
 - docker-compose up -d --build
 
 ### Laravel セットアップ
@@ -41,30 +42,6 @@
   .env ファイルに以下を追加
 * STRIPE_SECRET=your_stripe_secret_key  
   ※Stripeダッシュボードから取得したテスト用シークレットキーを記入、本番用キーは使用しない
-
-#### Mailhog 設定
-  本アプリではメール認証機能を使用しています。
-
-  docker-compose.yml に Mailhog サービスを追加
-* mailhog:
-*  image: mailhog/mailhog
-*  ports:
-*    - "1025:1025"
-*    - "8025:8025"
-
- .env ファイルに以下を追加
-* MAIL_MAILER=smtp
-* MAIL_HOST=mailhog
-* MAIL_PORT=1025
-* MAIL_USERNAME=null
-* MAIL_PASSWORD=null
-* MAIL_ENCRYPTION=null
-* MAIL_FROM_ADDRESS=test@example.com
-* MAIL_FROM_NAME="FleaMarket"
-
-追加後、以下を実施
-- docker-compose down
-- docker-compose up -d --build
 
 ### トラブルシューティング
 
@@ -123,7 +100,7 @@ SQLSTATE[HY000] [2002] Connection refused
 
 ## テスト設計
 
- 主要機能について合計⑯件の Feature テストを実装しています。
+ 主要機能について合計16ファイル、40項目の Feature テストを実装しています。
 - docker-compose exec php bash
 - php artisan test
 
