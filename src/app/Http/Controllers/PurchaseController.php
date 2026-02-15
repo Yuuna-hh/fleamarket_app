@@ -19,13 +19,17 @@ class PurchaseController extends Controller
 
         $user = Auth::user();
 
-        return view('purchase.purchase', [
-            'item'       => $item,
-            'user'       => $user,
-            'postalCode' => session('shipping_postal_code', $user->postal_code),
-            'address'    => session('shipping_address', $user->address),
-            'building'   => session('shipping_building', $user->building),
-        ]);
+        $postalCode = session('shipping_postal_code', $user->postal_code);
+        $address = session('shipping_address', $user->address);
+        $building = session('shipping_building', $user->building);
+
+        return view('purchase.purchase', compact(
+            'item',
+            'user',
+            'postalCode',
+            'address',
+            'building'
+        ));
     }
 
     public function store(PurchaseRequest $request, Item $item)
@@ -141,16 +145,20 @@ class PurchaseController extends Controller
     {
         DB::transaction(function () use ($item, $user, $method) {
             if (Purchase::where('item_id', $item->id)->exists()) {
-                abort(409, 'This item has already been purchased.');
+                abort(409, '売り切れの商品です');
             }
+
+            $postalCode = session('shipping_postal_code', $user->postal_code);
+            $address    = session('shipping_address', $user->address);
+            $building   = session('shipping_building', $user->building);
 
             Purchase::create([
                 'user_id' => $user->id,
                 'item_id' => $item->id,
                 'payment_method' => $method,
-                'shipping_postal_code' => $user->postal_code,
-                'shipping_address'     => $user->address,
-                'shipping_building'    => $user->building,
+                'shipping_postal_code' => $postalCode,
+                'shipping_address'     => $address,
+                'shipping_building'    => $building,
             ]);
         });
     }

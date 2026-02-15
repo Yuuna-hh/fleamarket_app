@@ -73,6 +73,19 @@ SQLSTATE[HY000] [2002] Connection refused
 
 - docker-compose restart php
 
+#### storage/framework の sessionsフォルダーエラーの場合
+
+エラー例：  
+file_put_contents(/var/www/storage/framework/sessions/xxxxxxxxxx): Failed to open stream: No such file or directory
+
+対処：
+
+- docker-compose exec php bash
+- mkdir -p storage/framework/sessions
+- mkdir -p storage/framework/views
+- mkdir -p storage/framework/cache
+- chmod -R 777 storage bootstrap/cache
+
 #### キャッシュのクリア（必要に応じて）
 
 - docker-compose exec php bash
