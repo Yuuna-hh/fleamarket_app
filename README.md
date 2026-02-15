@@ -4,8 +4,7 @@
 
 ### Dockerビルド
 
-- git clone git@github.com:Yuuna-hh/＜今回のリポジトリ名＞.git
-- cd ＜今回のリポジトリ名＞
+- git clone git@github.com:Yuuna-hh/fleamarket_app.git
 - docker-compose up -d --build
 
 ### Laravelセットアップ
@@ -35,13 +34,13 @@
   ※既にリンクが存在する場合はエラーが表示されますが、問題ありません
 
 #### Stripe設定
-  Stripe決済機能を利用するため、事前にStripeアカウントを作成してください。
+  Stripe決済機能を利用するため、事前にStripeアカウントを作成してください。  
   https://dashboard.stripe.com/login  
   テストモードを有効にする→「開発者」→「APIキー」を開く→「シークレットキー」をコピー
   
   .envファイルに以下を追加
 * STRIPE_SECRET=(your_stripe_secret_key)  
-  ※Stripeダッシュボードから取得したテスト用シークレットキーを記入、本番用キー（sk_live_〜）は使用しない
+  ※Stripeダッシュボードから取得したテスト用シークレットキーを記入、本番用キーは使用しない
 
 #### Mailhog設定
   本アプリではメール認証機能を使用しています。
@@ -175,3 +174,4 @@ SQLSTATE[HY000] [2002] Connection refused
 本アプリケーションは要件に従い、PC・タブレット幅を対象として実装しています。
 
 ## ER 図
+<img width="1497" height="1742" alt="test_fleamarket_app_ER" src="https://github.com/user-attachments/assets/eac5c68b-fc54-42a3-94b7-9876862402bd" />
