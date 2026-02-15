@@ -1,0 +1,159 @@
+/* プロフィール */
+
+.profile {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.profile__title {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 24px 0 28px;
+}
+
+.profile__form {
+    width: 100%;
+}
+
+.profile__top {
+    max-width: 520px;
+    margin: 40px auto;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.profile__fileInput {
+    display: none;
+}
+
+.profile__field {
+    max-width: 520px;
+    margin: 20px auto 18px;
+}
+
+.profile__label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.profile__input {
+    width: 100%;
+    height: 40px;
+    border: 1px solid #bfbfbf;
+    border-radius: 2px;
+    padding: 8px 10px;
+    background: #fff;
+}
+
+.profile__input:focus {
+    border-color: #8a8a8a;
+}
+
+.profile__actions {
+    max-width: 520px;
+    margin: 32px auto 0;
+}
+
+/* プロフィール編集画面とマイページ共通 */
+.profile__avatar {
+    width: 100px;
+    height: 100px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    background: #d9d9d9;
+    overflow: hidden;
+}
+
+.profile__avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    padding: 0 15px;
+    border: 1px solid #ff5555;
+    border-radius: 6px;
+    color: #ff5555;
+    font-weight: 700;
+    cursor: pointer;
+    user-select: none;
+    text-decoration: none;
+}
+
+/* マイページ */
+.mypage {
+    width: 100%;
+}
+
+.mypage__profileWrapper {
+    max-width: 680px;
+    margin: 0 auto 24px;
+}
+.mypage__profile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 40px 0;
+    max-width: 720px;
+}
+
+.mypage__profile-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.mypage__name {
+    font-size: 22px;
+    font-weight: 700;
+    margin-left: 30px;
+}
+
+/* レスポンシブ対応 */
+@media screen and (min-width: 1400px) and (max-width: 1540px) {
+    .profile__top {
+        margin: 48px auto;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 850px) {
+    .profile__top {
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        margin: 28px auto;
+    }
+
+    .profile__field,
+    .profile__actions {
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .mypage__profile {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        margin: 24px 0;
+    }
+
+    .mypage__profile-right {
+        width: 100%;
+    }
+
+    .mypage__name {
+        margin-left: 0;
+        font-size: 18px;
+    }
+}

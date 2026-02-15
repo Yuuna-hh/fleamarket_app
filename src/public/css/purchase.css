@@ -1,0 +1,167 @@
+.purchase {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    display: flex;
+    gap: 40px;
+}
+
+.purchase__left {
+    flex: 1;
+}
+
+.purchase__right {
+    width: 340px;
+}
+
+/* 商品情報 */
+.purchase__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+}
+
+.purchase__image {
+    width: 140px;
+    height: 140px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.purchase__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.purchase__info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.purchase__name {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.purchase__price {
+    font-size: 24px;
+    margin: 0;
+}
+
+/* 購入情報 */
+.purchase__hr {
+    margin: 36px 0;
+    border: none;
+    border-top: 1px solid #474747;
+}
+
+.purchase__section {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.purchase__sectionTitle {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.purchase__select {
+    width: 60%;
+    min-width: 240px;
+    padding: 10px 12px;
+    border: 1px solid #cfcfcf;
+    border-radius: 3px;
+    background: #fff;
+    font-size: 14px;
+}
+
+.purchase__select, .purchase__addressBody {
+    margin-left: 50px;
+}
+
+.purchase__addressHead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.purchase__addressLink {
+    color: #0073cc;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.purchase__addressLink:hover {
+    text-decoration: underline;
+}
+
+.purchase__addressBody p {
+    margin: 0;
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+/* 右側サマリ */
+.purchase__summary {
+    border: 1px solid #474747;
+    background: #fff;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    margin-bottom: 32px;
+}
+
+.purchase__summaryCell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 18px;
+}
+
+.purchase__summaryCell--label{
+    font-size: 14px;
+}
+
+.purchase__summaryCell--value {
+    font-size: 18px;
+}
+
+.purchase__summaryCell:nth-child(1),
+.purchase__summaryCell:nth-child(2) {
+    border-bottom: 1px solid #474747;
+}
+
+/* その他 */
+.purchase__hiddenSubmit {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* レスポンシブ対応 */
+@media screen and (max-width: 850px) {
+    .purchase {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .purchase__left {
+        width: 100%;
+        max-width: 580px;
+    }
+
+    .purchase__select, .purchase__addressBody {
+        margin-left: 0;
+    }
+}
+
+

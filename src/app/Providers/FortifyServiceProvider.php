@@ -9,16 +9,46 @@ use App\Actions\Fortify\UpdateUserProfileInformation;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Actions\RedirectIfTwoFactorAuthenticatable;
 use Laravel\Fortify\Fortify;
+use Laravel\Fortify\Contracts\LoginResponse;
+use Laravel\Fortify\Contracts\LogoutResponse;
+use Laravel\Fortify\Contracts\RegisterResponse;
+use App\Http\Responses\RegisterResponse as AppRegisterResponse;
+use Laravel\Fortify\Contracts\VerifiedResponse;
+use App\Http\Responses\VerifyEmailResponse;
+
 
 class FortifyServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        //
+        $this->app->singleton(LoginResponse::class, function () {
+            return new class implements LoginResponse {
+                public function toResponse($request)
+                {
+                    if ($request->filled('redirect')) {
+                        return redirect()->to($request->input('redirect'));
+                    }
+                    return redirect()->intended('/');
+                }
+            };
+        });
+
+        $this->app->singleton(LogoutResponse::class, function () {
+            return new class implements LogoutResponse {
+                public function toResponse($request)
+                {
+                    return redirect()->back();
+                }
+            };
+        });
+
+        $this->app->singleton(RegisterResponse::class, AppRegisterResponse::class);
+        $this->app->singleton(VerifiedResponse::class, VerifyEmailResponse::class);
     }
 
     public function boot(): void

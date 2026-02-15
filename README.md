@@ -2,12 +2,13 @@
 
 ## 環境構築
 
-### Docker ビルド
+### Dockerビルド
 
-- git clone git@github.com:Yuuna-hh/test_contact.git
+- git clone git@github.com:Yuuna-hh/＜今回のリポジトリ名＞.git
+- cd ＜今回のリポジトリ名＞
 - docker-compose up -d --build
 
-### Laravel セットアップ
+### Laravelセットアップ
 
 - docker-compose exec php bash
 
@@ -15,7 +16,7 @@
   依存パッケージインストール
 
 - cp .env.example .env  
-  .env ファイル作成と以下のように編集
+  .envファイル作成と以下のように編集
 
 * DB_HOST=mysql
 * DB_DATABASE=laravel_db
@@ -28,6 +29,43 @@
 - php artisan migrate
 - php artisan db:seed  
   マイグレーションと初期データ投入
+
+- php artisan storage:link  
+  プロフィール画像を表示するため実行
+  ※既にリンクが存在する場合はエラーが表示されますが、問題ありません
+
+#### Stripe設定
+  Stripe決済機能を利用するため、事前にStripeアカウントを作成してください。
+  https://dashboard.stripe.com/login  
+  テストモードを有効にする→「開発者」→「APIキー」を開く→「シークレットキー」をコピー
+  
+  .envファイルに以下を追加
+* STRIPE_SECRET=(your_stripe_secret_key)  
+  ※Stripeダッシュボードから取得したテスト用シークレットキーを記入、本番用キー（sk_live_〜）は使用しない
+
+#### Mailhog設定
+  本アプリではメール認証機能を使用しています。
+
+  docker-compose.yml に Mailhog サービスを追加
+* mailhog:
+*  image: mailhog/mailhog
+*  ports:
+*    - "1025:1025"
+*    - "8025:8025"
+
+ .envファイルに以下を追加
+* MAIL_MAILER=smtp
+* MAIL_HOST=mailhog
+* MAIL_PORT=1025
+* MAIL_USERNAME=null
+* MAIL_PASSWORD=null
+* MAIL_ENCRYPTION=null
+* MAIL_FROM_ADDRESS=test@example.com
+* MAIL_FROM_NAME="FleaMarket"
+
+追加後、以下を実施
+- docker-compose down
+- docker-compose up -d --build
 
 ### トラブルシューティング
 
@@ -68,27 +106,72 @@ SQLSTATE[HY000] [2002] Connection refused
 
 ## URL 一覧（開発環境）
 
-- お問い合わせフォーム入力：http://localhost/
-- お問い合わせ確認：http://localhost/confirm
-- サンクスページ：http://localhost/thanks
-- ユーザー登録：http://localhost/register
-- ログイン：http://localhost/login
-- 管理画面：http://localhost/admin
+- 商品一覧画面（トップ画面）：http://localhost/
+- 会員登録画面：http://localhost/register
+- ログイン画面：http://localhost/login
+- 商品詳細画面：http://localhost/item/{item_id}
+- 商品購入画面：http://localhost/purchase/{item_id}
+- 住所変更ページ：http://localhost/purchase/address/{item_id}
+- 商品出品画面：http://localhost/sell
+- プロフィール画面：http://localhost/mypage
+- プロフィール編集画面：http://localhost/mypage/profile
 - phpMyAdmin：http://localhost:8080
 
-/reset, /search, /export, /delete は画面表示を伴わない処理エンドポイントのため、画面として存在するのは上記のみです。
+補足（表示切り替え機能）
+- 商品一覧画面（マイリスト表示）：http://localhost/?tab=mylist
+- プロフィール画面（購入した商品表示）：http://localhost/mypage?page=buy
+- プロフィール画面（出品した商品表示）：http://localhost/mypage?page=sell
+
+## テスト設計
+
+ 主要機能についてFeatureテストを実装しています。
+- docker-compose exec php bash
+- php artisan test
+
+テスト内容
+* 会員登録機能(RegisterTest.php)
+* ログイン機能(LoginTest.php)
+* ログアウト機能(LogoutTest.php)
+* 商品一覧取得(ItemListTest.php)
+* マイリスト一覧取得(MyListTest.php)
+* 商品検索機能(ItemSearchTest.php)
+* 商品詳細情報取得(ItemDetailTest.php)
+* いいね機能(LikeTest.php)
+* コメント送信機能(CommentTest.php)
+* 商品購入機能  (PurchaseTest.php)  
+  Stripe決済は外部API通信が発生するため、testing環境ではStripe処理をスキップし、直接購入レコードを作成する分岐を実装しています。
+* 支払い方法選択機能(PaymentMethodTest.php)
+* 配送先変更機能(AddressChangeTest.php)
+* ユーザー情報取得(UserProfileTest.php)
+* ユーザー情報変更(UserProfileUpdateTest.php)
+* 出品商品情報登録(SellItelTest.php)
+* メール認証機能(EmailVerificationTest.php)
+
+合計16件のFeatureテストを実装しています。
+
+### テスト実行後の注意
+
+本アプリケーションのテストではRefreshDatabaseを使用しているため、テスト実行後はデータベースが初期化されます。
+テスト後に動作確認を行う場合は、以下を実行してください。
+- docker-compose exec php bash
+- php artisan migrate:fresh --seed
 
 ## 使用技術（実行環境）
 
-- PHP 8.3.6
-- Laravel 8.83.29
+- PHP 8.1.34
+- Laravel 10.50.0
 - MySQL 8.0.26
 - nginx 1.21.1
+- Mailhog
 
 ## コーディング規約
 
-本アプリケーションは COACHTECH が定める以下の PHP コーディング規約に基づいて開発しています。
+本アプリケーションはCOACHTECHが定める以下のPHPコーディング規約およびルールに基づいて開発しています。
 
 - https://estra-inc.notion.site/1263a94a2aab4e3ab81bad77db1cf186
+
+## レスポンシブ対応
+
+本アプリケーションは要件に従い、PC・タブレット幅を対象として実装しています。
 
 ## ER 図

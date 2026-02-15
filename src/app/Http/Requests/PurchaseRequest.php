@@ -14,8 +14,7 @@ class PurchaseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'payment_method' => 'required',
-            'address_id' => 'required',
+            'payment_method' => ['required', 'in:convenience,card'],
         ];
     }
 
@@ -23,8 +22,7 @@ class PurchaseRequest extends FormRequest
     {
         return [
             'payment_method.required' => '支払い方法を選択してください',
-            'address_id.required' => '配送先を選択してください',
+            'payment_method.in' => '支払い方法を選択してください',
         ];
     }
 }
-
