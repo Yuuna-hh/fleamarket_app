@@ -4,8 +4,8 @@
 
 ### Docker ビルド
 
-- git clone git@github.com:Yuuna-hh/fleamarket_app.git
-- cd src
+- git clone https://github.com/Yuuna-hh/fleamarket_app.git
+- cd fleamarket_app/src
 - docker-compose up -d --build
 
 ### Laravel セットアップ
