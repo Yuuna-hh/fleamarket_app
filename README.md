@@ -2,12 +2,12 @@
 
 ## 環境構築
 
-### Dockerビルド
+### Docker ビルド
 
 - git clone git@github.com:Yuuna-hh/fleamarket_app.git
 - docker-compose up -d --build
 
-### Laravelセットアップ
+### Laravel セットアップ
 
 - docker-compose exec php bash
 
@@ -15,7 +15,7 @@
   依存パッケージインストール
 
 - cp .env.example .env  
-  .envファイル作成と以下のように編集
+  .env ファイル作成と以下のように編集
 
 * DB_HOST=mysql
 * DB_DATABASE=laravel_db
@@ -33,16 +33,16 @@
   プロフィール画像を表示するため実行
   ※既にリンクが存在する場合はエラーが表示されますが、問題ありません
 
-#### Stripe設定
+#### Stripe 設定
   Stripe決済機能を利用するため、事前にStripeアカウントを作成してください。  
   https://dashboard.stripe.com/login  
   テストモードを有効にする→「開発者」→「APIキー」を開く→「シークレットキー」をコピー
   
-  .envファイルに以下を追加
-* STRIPE_SECRET=(your_stripe_secret_key)  
+  .env ファイルに以下を追加
+* STRIPE_SECRET=your_stripe_secret_key  
   ※Stripeダッシュボードから取得したテスト用シークレットキーを記入、本番用キーは使用しない
 
-#### Mailhog設定
+#### Mailhog 設定
   本アプリではメール認証機能を使用しています。
 
   docker-compose.yml に Mailhog サービスを追加
@@ -52,7 +52,7 @@
 *    - "1025:1025"
 *    - "8025:8025"
 
- .envファイルに以下を追加
+ .env ファイルに以下を追加
 * MAIL_MAILER=smtp
 * MAIL_HOST=mailhog
 * MAIL_PORT=1025
@@ -123,34 +123,32 @@ SQLSTATE[HY000] [2002] Connection refused
 
 ## テスト設計
 
- 主要機能についてFeatureテストを実装しています。
+ 主要機能について合計⑯件の Feature テストを実装しています。
 - docker-compose exec php bash
 - php artisan test
 
 テスト内容
-* 会員登録機能(RegisterTest.php)
-* ログイン機能(LoginTest.php)
-* ログアウト機能(LogoutTest.php)
-* 商品一覧取得(ItemListTest.php)
-* マイリスト一覧取得(MyListTest.php)
-* 商品検索機能(ItemSearchTest.php)
-* 商品詳細情報取得(ItemDetailTest.php)
-* いいね機能(LikeTest.php)
-* コメント送信機能(CommentTest.php)
-* 商品購入機能  (PurchaseTest.php)  
+* 会員登録機能 (RegisterTest.php)
+* ログイン機能 (LoginTest.php)
+* ログアウト機能 (LogoutTest.php)
+* 商品一覧取得 (ItemListTest.php)
+* マイリスト一覧取得 (MyListTest.php)
+* 商品検索機能 (ItemSearchTest.php)
+* 商品詳細情報取得 (ItemDetailTest.php)
+* いいね機能 (LikeTest.php)
+* コメント送信機能 (CommentTest.php)
+* 商品購入機能 (PurchaseTest.php)  
   Stripe決済は外部API通信が発生するため、testing環境ではStripe処理をスキップし、直接購入レコードを作成する分岐を実装しています。
-* 支払い方法選択機能(PaymentMethodTest.php)
-* 配送先変更機能(AddressChangeTest.php)
-* ユーザー情報取得(UserProfileTest.php)
-* ユーザー情報変更(UserProfileUpdateTest.php)
-* 出品商品情報登録(SellItelTest.php)
-* メール認証機能(EmailVerificationTest.php)
-
-合計16件のFeatureテストを実装しています。
+* 支払い方法選択機能 (PaymentMethodTest.php)
+* 配送先変更機能 (AddressChangeTest.php)
+* ユーザー情報取得 (UserProfileTest.php)
+* ユーザー情報変更 (UserProfileUpdateTest.php)
+* 出品商品情報登録 (SellItemTest.php)
+* メール認証機能 (EmailVerificationTest.php)
 
 ### テスト実行後の注意
 
-本アプリケーションのテストではRefreshDatabaseを使用しているため、テスト実行後はデータベースが初期化されます。
+本アプリケーションのテストでは RefreshDatabase を使用しているため、テスト実行後はデータベースが初期化されます。
 テスト後に動作確認を行う場合は、以下を実行してください。
 - docker-compose exec php bash
 - php artisan migrate:fresh --seed
@@ -165,7 +163,7 @@ SQLSTATE[HY000] [2002] Connection refused
 
 ## コーディング規約
 
-本アプリケーションはCOACHTECHが定める以下のPHPコーディング規約およびルールに基づいて開発しています。
+本アプリケーションは COACHTECH が定める以下のPHPコーディング規約およびルールに基づいて開発しています。
 
 - https://estra-inc.notion.site/1263a94a2aab4e3ab81bad77db1cf186
 
@@ -174,4 +172,5 @@ SQLSTATE[HY000] [2002] Connection refused
 本アプリケーションは要件に従い、PC・タブレット幅を対象として実装しています。
 
 ## ER 図
-<img width="1497" height="1742" alt="test_fleamarket_app_ER" src="https://github.com/user-attachments/assets/eac5c68b-fc54-42a3-94b7-9876862402bd" />
+
+![ER Diagram](src/docs/test_fleamarket_app_ER.png)
